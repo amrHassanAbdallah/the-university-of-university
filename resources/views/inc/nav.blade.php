@@ -21,5 +21,8 @@
         <li class="sidebar-nav-item">
             <a class="js-scroll-trigger" href="#contact">Contact</a>
         </li>
+        <li class="sidebar-nav-item">
+            <a class="js-scroll-trigger" href="/login">Login</a>
+        </li>
     </ul>
 </nav>
