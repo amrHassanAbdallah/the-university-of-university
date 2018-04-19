@@ -167,4 +167,5 @@
     </small>
 </section>
 
+@include('layouts.code')
 @include('inc.footer')
