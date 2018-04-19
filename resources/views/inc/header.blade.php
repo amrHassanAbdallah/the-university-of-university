@@ -21,5 +21,7 @@
 
     <!-- Custom CSS -->
     <link href="{{asset('css/stylish-portfolio.min.css')}}" rel="stylesheet">
-
+    <!-- code hint -->
+    <link rel="stylesheet"
+          href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
 </head>

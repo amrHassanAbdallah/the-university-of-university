@@ -38,6 +38,9 @@
 <!-- Custom scripts for this template -->
 <script src="{{asset('js/stylish-portfolio.min.js')}}"></script>
 
+<!-- code hint -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
 </body>
 
 </html>
