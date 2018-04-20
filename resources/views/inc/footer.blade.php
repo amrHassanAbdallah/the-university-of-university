@@ -1,5 +1,6 @@
 <!-- Footer -->
 <footer class="footer text-center">
+    @include('layouts.code')
     <div class="container">
         <ul class="list-inline mb-5">
             <li class="list-inline-item">

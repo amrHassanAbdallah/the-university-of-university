@@ -24,4 +24,16 @@
     <!-- code hint -->
     <link rel="stylesheet"
           href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <style>
+        body {
+            min-height: 100vh;
+
+        }
+
+        footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
 </head>
