@@ -40,7 +40,6 @@
 <script src="{{asset('js/stylish-portfolio.min.js')}}"></script>
 
 <script src="{{asset('js/jquery.dataTables.min.js')}}"></script>
-<script src="{{asset('js/stylish-portfolio.min.js')}}"></script>
 
 <!-- code hint -->
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
