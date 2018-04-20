@@ -37,7 +37,7 @@ class User extends Authenticatable
     private $rules = [
         'id' => 'nullable|max:12|exist:users,id',
         'name' => 'required|max:120',
-        'email' => 'required|max:160|unique:users',
+        'email' => 'nullable|max:160|unique:users',
         'password' => 'required|
                min:6|
                         |confirmed',
@@ -68,13 +68,15 @@ class User extends Authenticatable
     {
         $required = [
             'name',
-            'email',
             'level',
             'password',
             'password_confirmation'
         ];
-        if ($method === 'update') {
+        if ($method === 'put') {
             $required[] = 'id';
+        } elseif ($method === 'post') {
+            $required[] = 'email';
+
         }
 
 
@@ -102,6 +104,21 @@ class User extends Authenticatable
         }
         $dataArray["password"] = bcrypt($dataArray["password"]);
         User::create($dataArray);
+        return ["data" => $user, "state" => 0];
+
+
+    }
+
+    public static function updateUser($dataArray, $id)
+    {
+        $user = self::findOrFail($id);
+        $dataArray["password"] = ($dataArray["password"]) ? bcrypt($dataArray["password"]) : $user->password;
+        $dataArray["password_confirmation"] = ($dataArray["password_confirmation"]) ? bcrypt($dataArray["password_confirmation"]) : $user->password;
+        $user->validate($dataArray);
+        if (count($user->errors())) {
+            return ["data" => $user->errors(), "state" => 1];
+        }
+        $user->update($dataArray);
         return ["data" => $user, "state" => 0];
 
 

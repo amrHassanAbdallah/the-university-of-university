@@ -44,7 +44,7 @@ class UserController extends Controller
         if ($res["state"]) {
             return redirect()->back()->with('errors', $res['data']);
         }
-        return redirect()->back()->with('success', 'new user have been created');
+        return redirect()->back()->with('success', 'User have been updated ');
 
     }
 
@@ -79,7 +79,11 @@ class UserController extends Controller
 	 */
 	public function update(Request $request, $id)
 	{
-		//
+        $res = User::updateUser(User::getDataFromRequest(User::getRequiredAttribute('put'), $request), $id);
+        if ($res["state"]) {
+            return redirect()->back()->with('errors', $res['data']);
+        }
+        return redirect()->back()->with('success', 'new user have been created');
 	}
 
 	/**
@@ -90,6 +94,7 @@ class UserController extends Controller
 	 */
 	public function destroy($id)
 	{
-		//
+        User::find($id)->delete();
+        return redirect()->back()->with('success', 'User deleted !');
 	}
 }
