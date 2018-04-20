@@ -30,6 +30,7 @@ class HomeController extends Controller
 		} elseif (Auth::user()->level === "teacher") {
 			return view('teacher.index');
 		}
+		dd("here", Auth::user()->level === "admin");
 		return view('home');
 	}
 }

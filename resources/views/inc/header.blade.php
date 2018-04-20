@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Stylish Portfolio - Start Bootstrap Template</title>
+    <title>The university of university @yield('page-name')</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="{{asset('vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
@@ -21,8 +21,14 @@
 
     <!-- Custom CSS -->
     <link href="{{asset('css/stylish-portfolio.min.css')}}" rel="stylesheet">
+    <link href="{{asset('css/dataTables.bootstrap.min.css')}}" rel="stylesheet">
     <!-- code hint -->
     <link rel="stylesheet"
           href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
 
+    <style>
+        .dataTables_paginate a {
+            margin: 0 5px;
+        }
+    </style>
 </head>

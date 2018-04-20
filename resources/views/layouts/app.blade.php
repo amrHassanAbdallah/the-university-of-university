@@ -55,3 +55,8 @@
 </div>
 </body>
 @include('inc.footer')
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable();
+    });
+</script>
