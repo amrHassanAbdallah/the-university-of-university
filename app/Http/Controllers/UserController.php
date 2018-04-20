@@ -29,7 +29,7 @@ class UserController extends Controller
 	 */
 	public function create()
 	{
-		//
+		return view('admin.user.create');
 	}
 
 	/**
@@ -62,7 +62,7 @@ class UserController extends Controller
 	 */
 	public function edit($id)
 	{
-		//
+		return view('admin.user.edit')->with('User', User::find($id));
 	}
 
 	/**
