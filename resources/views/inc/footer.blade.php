@@ -19,7 +19,7 @@
                 </a>
             </li>
         </ul>
-        <p class="text-muted small mb-0">Copyright &copy; Your Website 2017</p>
+        <p class="text-muted small mb-0">Copyright &copy; the university of university {{date('Y')}}</p>
     </div>
 </footer>
 
