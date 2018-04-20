@@ -31,7 +31,8 @@ class AddForeignKeyToClassesTable extends Migration
 	public function down()
 	{
 		Schema::table('classes', function (Blueprint $table) {
-
+			$table->dropForeign(['course_id']);
+			$table->dropForeign(['user_id']);
 		});
 	}
 }

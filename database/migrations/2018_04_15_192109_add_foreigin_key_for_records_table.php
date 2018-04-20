@@ -31,7 +31,9 @@ class AddForeiginKeyForRecordsTable extends Migration
 	public function down()
 	{
 		Schema::table('records', function (Blueprint $table) {
-			//
+			$table->dropForeign(['user_id']);
+			$table->dropForeign(['course_id']);
+
 		});
 	}
 }
