@@ -54,4 +54,5 @@
     </main>
 </div>
 </body>
+@include('layouts.code')
 @include('inc.footer')
