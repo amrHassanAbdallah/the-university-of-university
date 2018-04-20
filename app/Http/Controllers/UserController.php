@@ -40,8 +40,13 @@ class UserController extends Controller
 	 */
 	public function store(Request $request)
 	{
-		//
-	}
+        $res = User::store(User::getDataFromRequest(User::getRequiredAttribute('post'), $request));
+        if ($res["state"]) {
+            return redirect()->back()->with('errors', $res['data']);
+        }
+        return redirect()->back()->with('success', 'new user have been created');
+
+    }
 
 	/**
 	 * Display the specified resource.
