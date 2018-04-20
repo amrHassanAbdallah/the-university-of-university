@@ -2,6 +2,15 @@
 @section('content')
     <div class="container">
         <div class="row">
+            <div class="col-12">
+                <div class="content-section-heading text-center">
+                    <h3 class="text-secondary mb-0">Manage</h3>
+                    <h2 class="mb-5">Users</h2>
+                </div>
+            </div>
+
+
+        </div>
             <div class="col-lg-12">
                 <table id="example" class="table table-pagination table-striped table-bordered" style="width:100%">
                     <thead>
