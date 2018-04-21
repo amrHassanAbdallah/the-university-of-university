@@ -31,6 +31,19 @@ class StudentClass extends Model
 
     ];
 
+    public function User()
+    {
+        return $this->belongsToMany(User::class, 'user_class', 'class_id')
+            ->withTimestamps();
+    }
+
+    public function Course()
+    {
+        return $this->belongsToMany(Course::class, 'user_course', 'class_id')
+            ->withTimestamps();
+    }
+
+
     public function validate($data)
     {
         $validator = Validator::make($data, $this->rules);

@@ -47,10 +47,11 @@
     <div class="container">
         <div class="row text-center">
             <div class="col-lg-12">
-                @if(Auth::user()->level =="student")
+                @if(Auth::user()->level =="student"&&!Auth::user()->Classes()->where('id',$class->id)->first())
                     <h3> Other actions </h3>
                     <br>
                     <div>
+
                         <form style="display: inline-block" action="{{route('class.join',$class->id)}}"
                               method="post">
                             {{csrf_field()}}
@@ -59,6 +60,8 @@
 
 
                     </div>
+                @else
+                    you already enrolled in this course
                 @endif
 
             </div>

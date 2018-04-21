@@ -50,6 +50,12 @@ class User extends Authenticatable
             ->withTimestamps();
     }
 
+    public function Classes()
+    {
+        return $this->belongsToMany(StudentClass::class, 'user_class', 'user_id', 'class_id')
+            ->withTimestamps();
+    }
+
     public function validate($data)
     {
         $validator = Validator::make($data, $this->rules);

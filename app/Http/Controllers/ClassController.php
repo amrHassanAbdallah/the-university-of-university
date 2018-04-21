@@ -117,10 +117,23 @@ class ClassController extends Controller
 
     public function join($id)
     {
-        $course = Course::find($id);
+        $class = StudentClass::find($id);
+        $course = Course::find($class->course_id);
         $coursePreIds = $course->getPrequestedCoursesIds();
-        $UserTokeIT = Auth::user()->Course()->whereIn('id', $coursePreIds)->get();
-        dd($coursePreIds, $UserTokeIT);
+        $UserTokeIT = Auth::user()->Classes()->where('course_id', $course->id)->where('active', 1)->get();
+        $TotallActiveCourses = Auth::user()->Classes()->where('active', 1)->count();
+
+        if (count($UserTokeIT) === count($coursePreIds) && !count($UserTokeIT) && $TotallActiveCourses < 9) {
+            $class->user()->save(Auth::user());
+
+            return redirect()->back()->with('success', 'your enrollment will be held till you pay the fees .');
+
+        }
+        if (count($UserTokeIT) !== count($coursePreIds)) {
+            return redirect()->back()->with('error', 'you have not met the Prerequisite yet!');
+
+        }
+        return redirect()->back()->with('error', 'you already joined this class');
 
 
 
