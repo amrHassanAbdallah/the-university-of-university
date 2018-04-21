@@ -59,10 +59,12 @@ class ClassController extends Controller
     public function show($id)
     {
         $class = StudentClass::find($id);
+        $course = Course::find($class->id);
         return view('admin.class.single')->with([
             'class' => StudentClass::find($id),
-            'course' => Course::find($class->id),
-            'teacher' => User::find($class->user_id)
+            'course' => $course,
+            'teacher' => User::find($class->user_id),
+            'PreCourses' => $course->getPreqCourse()
         ]);
     }
 
@@ -110,5 +112,11 @@ class ClassController extends Controller
     {
         StudentClass::find($id)->delete();
         return redirect()->back()->with('success', 'Class deleted !');
+    }
+
+    public function join($id)
+    {
+
+
     }
 }

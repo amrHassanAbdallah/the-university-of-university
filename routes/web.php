@@ -21,3 +21,5 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('user', 'UserController');
 Route::resource('course', 'CourseController');
 Route::resource('class', 'ClassController');
+
+Route::post('/class/{id}/join', 'ClassController@join')->name('class.join');

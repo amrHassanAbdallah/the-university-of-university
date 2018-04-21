@@ -47,7 +47,7 @@ class Course extends Model
         return $this->hasMany(Prerequisite::class)->select(['course_id']);
     }
 
-    public function getPrequestedCourses()
+    public function getPrequestedCoursesIds()
     {
         $related = Prerequisite::where('course_id', $this->id)->get();
         $couses_ids = [];
@@ -55,6 +55,13 @@ class Course extends Model
             $couses_ids[] = $rel->id;
         }
         return $couses_ids;
+
+    }
+
+    public function getPreqCourse()
+    {
+        $courses_ids = $this->getPrequestedCoursesIds();
+        return self::find($courses_ids);
 
     }
 
