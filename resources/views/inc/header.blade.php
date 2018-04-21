@@ -30,5 +30,9 @@
         .dataTables_paginate a {
             margin: 0 5px;
         }
+
+        .col-lg-6 {
+            margin-bottom: 10px;
+        }
     </style>
 </head>
