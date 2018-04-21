@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Prerequisite extends Model
 {
 
-    protected $fillable = ['course_id'];
+    protected $fillable = ['course_id', 'pre_id'];
 
     public function Course()
     {

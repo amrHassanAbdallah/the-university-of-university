@@ -38,7 +38,7 @@ class Course extends Model
     public static function createPre($preq, $course): void
     {
         foreach ($preq as $item) {
-            Prerequisite::create(['course_id' => $course->id]);
+            Prerequisite::create(['course_id' => $course->id, 'pre_id' => $item]);
         }
     }
 
@@ -49,12 +49,12 @@ class Course extends Model
 
     public function getPrequestedCoursesIds()
     {
-        $related = Prerequisite::where('course_id', $this->id)->get();
-        $couses_ids = [];
+        $related = Prerequisite::where('course_id', $this->id)->pluck('pre_id');
+        /*$couses_ids = [];
         foreach ($related as $rel) {
             $couses_ids[] = $rel->id;
-        }
-        return $couses_ids;
+        }*/
+        return $related;
 
     }
 
@@ -152,5 +152,10 @@ class Course extends Model
         return ["data" => $course, "state" => 0];
 
 
+    }
+
+    public function getCoursesTokenByUser($user_id)
+    {
+        return self::where('user_id', $user_id);
     }
 }

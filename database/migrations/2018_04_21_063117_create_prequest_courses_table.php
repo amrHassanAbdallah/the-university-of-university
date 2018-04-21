@@ -19,6 +19,10 @@ class CreatePrequestCoursesTable extends Migration
             $table->foreign('course_id')
                 ->references('id')->on('courses')
                 ->onDelete('cascade');
+            $table->integer('pre_id')->unsigned();
+            $table->foreign('pre_id')
+                ->references('id')->on('courses')
+                ->onDelete('cascade');
             $table->timestamps();
 
 

@@ -116,6 +116,9 @@ class ClassController extends Controller
 
     public function join($id)
     {
+        $course = Course::find($id);
+        $coursePreIds = $course->getPrequestedCoursesIds();
+
 
 
     }

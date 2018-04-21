@@ -63,9 +63,8 @@ class CourseController extends Controller
     public function edit($id)
     {
         $Course = Course::find($id);
-        $PrequestCourses = $Course->getPrequestedCourses();
+        $PrequestCourses = $Course->getPrequestedCoursesIds();
         $OtherCourses = $Course->getOtherCourses($PrequestCourses);
-        $PrequestCourses[] = $Course->id;
         $PrequestCourses = Course::find($PrequestCourses);
         return view('admin.course.edit')->with([
             'Course' => $Course,
