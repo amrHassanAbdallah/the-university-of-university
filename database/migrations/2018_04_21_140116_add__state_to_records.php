@@ -14,7 +14,7 @@ class AddStateToRecords extends Migration
     public function up()
     {
         Schema::table('records', function (Blueprint $table) {
-            $table->enum('state', ['paid', 'postponed']);
+            $table->enum('state', ['paid', 'postponed'])->default('postponed');
         });
     }
 
