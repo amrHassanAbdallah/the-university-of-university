@@ -34,5 +34,12 @@
         .col-lg-6 {
             margin-bottom: 10px;
         }
+
+        .teacherSect img {
+            max-width: 200px;
+            height: auto;
+            border-radius: 100px;
+            border: 1px solid black;
+        }
     </style>
 </head>

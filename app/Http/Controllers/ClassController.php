@@ -58,7 +58,12 @@ class ClassController extends Controller
      */
     public function show($id)
     {
-        //
+        $class = StudentClass::find($id);
+        return view('admin.class.single')->with([
+            'class' => StudentClass::find($id),
+            'course' => Course::find($class->id),
+            'teacher' => User::find($class->user_id)
+        ]);
     }
 
     /**

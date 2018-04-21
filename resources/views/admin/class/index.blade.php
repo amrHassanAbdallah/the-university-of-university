@@ -4,7 +4,12 @@
         <div class="row">
             <div class="col-12">
                 <div class="content-section-heading text-center">
+                    @if(Auth::user()->level =="admin")
+
                     <h3 class="text-secondary mb-0">Manage</h3>
+                    @else
+                        <h3 class="text-secondary mb-0">Join</h3>
+                    @endif
                     <h2 class="mb-5">Classes</h2>
                 </div>
             </div>
@@ -29,6 +34,7 @@
                         <td>{{$class->date}}</td>
                         <td>{{$class->location}}</td>
                         <td>
+                            @if(Auth::user()->level =="admin")
                             <a href="{{route('class.edit',$class->id)}}" class="btn btn-xs btn-info"
                                style="margin-right: 20px">Edit</a>
                             <form style="display: inline-block" action="{{route('class.destroy',$class->id)}}"
@@ -37,6 +43,10 @@
                                 {{csrf_field()}}
                                 <button type="submit" class="btn btn-xs btn-danger">Delete</button>
                             </form>
+                            @else
+                                <a href="{{route('class.show',$class->id)}}" class="btn btn-xs btn-info"
+                                   style="margin-right: 20px">View</a>
+                            @endif
                         </td>
                     </tr>
                 @endforeach
@@ -50,10 +60,11 @@
     <div class="container">
         <div class="row text-center">
             <div class="col-lg-12">
-
+                @if(Auth::user()->level =="admin")
                 <h3> Other actions </h3>
                 <br>
                 <div><a href="{{route('class.create')}}" class="btn btn-success">add a Class</a></div>
+                @endif
 
             </div>
             <br>

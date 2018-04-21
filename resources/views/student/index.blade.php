@@ -17,7 +17,7 @@
                         <div class="card-body">
                             <h5 class="card-title">register courses</h5>
                             <p class="card-text">add , delete course .</p>
-                            <a href="{{route('user.index')}}" class="btn btn-primary">Go </a>
+                            <a href="{{route('class.index')}}" class="btn btn-primary">Go </a>
                         </div>
                     </div>
                 </div>
