@@ -24,7 +24,8 @@ class CourseController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.course.create')->with('courses', Course::all());
+
     }
 
     /**
@@ -35,7 +36,11 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $res = Course::store(Course::getDataFromRequest(Course::getRequiredAttribute('post'), $request));
+        if ($res["state"]) {
+            return redirect()->back()->with('errors', $res['data']);
+        }
+        return redirect()->back()->with('success', 'a new Course have been added ');
     }
 
     /**
@@ -57,7 +62,17 @@ class CourseController extends Controller
      */
     public function edit($id)
     {
-        //
+        $Course = Course::find($id);
+        $PrequestCourses = $Course->getPrequestedCourses();
+        $OtherCourses = $Course->getOtherCourses($PrequestCourses);
+        $PrequestCourses[] = $Course->id;
+        $PrequestCourses = Course::find($PrequestCourses);
+        return view('admin.course.edit')->with([
+            'Course' => $Course,
+            'Prerequisites' => $PrequestCourses,
+            'OtherCourses' => $OtherCourses
+        ]);
+
     }
 
     /**
@@ -69,7 +84,12 @@ class CourseController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        $res = Course::updateIt(Course::getDataFromRequest(Course::getRequiredAttribute('put'), $request), $id);
+        if ($res["state"]) {
+            return redirect()->back()->with('errors', $res['data']);
+        }
+        return redirect()->back()->with('success', 'Course updated !');
     }
 
     /**
@@ -80,6 +100,7 @@ class CourseController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Course::find($id)->delete();
+        return redirect()->back()->with('success', 'Course deleted !');
     }
 }

@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class Course extends Model
@@ -12,9 +13,10 @@ class Course extends Model
 
     protected $fillable = [
         'name',
-        'email',
-        'password',
-        'level'
+        'code',
+        'description',
+        'total_grade',
+        'prerequisite'
     ];
     private $errors = [];
 
@@ -22,13 +24,44 @@ class Course extends Model
     private $rules = [
         'id' => 'nullable|max:12|exist:users,id',
         'name' => 'required|max:120',
-        'email' => 'nullable|max:160|unique:users',
-        'password' => 'required|
-               min:6|
-                        |confirmed',
-        'password_confirmation' => 'required'
+        'code' => 'nullable|max:10|min:4',
+        'description' => 'nullable|max:160',
+        'total_grade' => 'required',
+        'prerequisite' => 'nullable'
     ];
 
+    /**
+     * @param $preq
+     * @param $course
+     * @param $arr
+     */
+    public static function createPre($preq, $course): void
+    {
+        foreach ($preq as $item) {
+            Prerequisite::create(['course_id' => $course->id]);
+        }
+    }
+
+    public function Prerequisite()
+    {
+        return $this->hasMany(Prerequisite::class)->select(['course_id']);
+    }
+
+    public function getPrequestedCourses()
+    {
+        $related = Prerequisite::where('course_id', $this->id)->get();
+        $couses_ids = [];
+        foreach ($related as $rel) {
+            $couses_ids[] = $rel->id;
+        }
+        return $couses_ids;
+
+    }
+
+    public function getOtherCourses($arrayOfCourses)
+    {
+        return self::whereNotIn('id', $arrayOfCourses)->get();
+    }
 
     public function validate($data)
     {
@@ -52,18 +85,15 @@ class Course extends Model
     {
         $required = [
             'name',
-            'level',
-            'password',
-            'password_confirmation'
+            'code',
+            'description',
+            'total_grade',
+            'prerequisite'
         ];
         if ($method === 'put') {
             $required[] = 'id';
-        } elseif ($method === 'post') {
-            $required[] = 'email';
-
+            $required[] = 'prerequisite_to_be_deleted';
         }
-
-
         return $required;
 
     }
@@ -86,24 +116,33 @@ class Course extends Model
         if (count($user->errors())) {
             return ["data" => $user->errors(), "state" => 1];
         }
-        $dataArray["password"] = bcrypt($dataArray["password"]);
-        User::create($dataArray);
+        $preq = ($dataArray["prerequisite"]) ?? null;
+        unset($dataArray['prerequisite']);
+        $course = Course::create($dataArray);
+        /*        $course->prerequisite()->attach($preq);*/
+        self::createPre($preq, $course);
         return ["data" => $user, "state" => 0];
 
 
     }
 
-    public static function updateUser($dataArray, $id)
+    public static function updateIt($dataArray, $id)
     {
-        $user = self::findOrFail($id);
-        $dataArray["password"] = ($dataArray["password"]) ? bcrypt($dataArray["password"]) : $user->password;
-        $dataArray["password_confirmation"] = ($dataArray["password_confirmation"]) ? bcrypt($dataArray["password_confirmation"]) : $user->password;
-        $user->validate($dataArray);
-        if (count($user->errors())) {
-            return ["data" => $user->errors(), "state" => 1];
+        $course = self::findOrFail($id);
+        $preq = ($dataArray["prerequisite"]) ?? [];
+        $ToBeDeleted = ($dataArray["prerequisite_to_be_deleted"]) ?? [];
+        unset($dataArray['prerequisite']);
+        unset($dataArray['prerequisite_to_be_deleted']);
+        $course->validate($dataArray);
+        if (count($course->errors())) {
+            return ["data" => $course->errors(), "state" => 1];
         }
-        $user->update($dataArray);
-        return ["data" => $user, "state" => 0];
+        self::createPre($preq, $course);
+
+        DB::table('prerequisites')->whereIn('id', $ToBeDeleted)->delete();
+
+        $course->update($dataArray);
+        return ["data" => $course, "state" => 0];
 
 
     }
