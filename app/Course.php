@@ -30,6 +30,12 @@ class Course extends Model
         'prerequisite' => 'nullable'
     ];
 
+    public function User()
+    {
+        return $this->belongsToMany('App\User')
+            ->withTimestamps();
+    }
+
     /**
      * @param $preq
      * @param $course

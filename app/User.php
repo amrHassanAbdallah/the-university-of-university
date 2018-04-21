@@ -44,6 +44,11 @@ class User extends Authenticatable
         'password_confirmation' => 'required'
     ];
 
+    public function Course()
+    {
+        return $this->belongsToMany('App\Course')
+            ->withTimestamps();
+    }
 
     public function validate($data)
     {
