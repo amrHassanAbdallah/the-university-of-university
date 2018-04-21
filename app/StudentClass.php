@@ -31,7 +31,6 @@ class StudentClass extends Model
 
     ];
 
-
     public function validate($data)
     {
         $validator = Validator::make($data, $this->rules);

@@ -32,7 +32,7 @@ class Course extends Model
 
     public function User()
     {
-        return $this->belongsToMany('App\User')
+        return $this->belongsToMany(User::class, 'user_course')
             ->withTimestamps();
     }
 

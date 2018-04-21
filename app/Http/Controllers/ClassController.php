@@ -6,6 +6,7 @@ use App\Course;
 use App\StudentClass;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ClassController extends Controller
 {
@@ -118,6 +119,8 @@ class ClassController extends Controller
     {
         $course = Course::find($id);
         $coursePreIds = $course->getPrequestedCoursesIds();
+        $UserTokeIT = Auth::user()->Course()->whereIn('id', $coursePreIds)->get();
+        dd($coursePreIds, $UserTokeIT);
 
 
 
