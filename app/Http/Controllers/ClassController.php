@@ -17,9 +17,11 @@ class ClassController extends Controller
      */
     public function index()
     {
+        /*dd(            Auth::user()->Classes()->where('active',1)->get()
+);*/
         return view('admin.class.index')->with([
             'classes' => StudentClass::all(),
-            'myClasses' => Auth::user()->Classes
+            'myClasses' => Auth::user()->Classes()->where('active', 1)->get()
         ]);
 
     }
@@ -140,5 +142,16 @@ class ClassController extends Controller
 
 
 
+    }
+
+    public function cancelEnrollment($id)
+    {
+        $class = Auth::user()->Classes()->where('id', $id)->first();
+        if ($class) {
+
+            Auth::user()->Classes()->detach($class);
+        }
+
+        return redirect()->back()->with('success', 'your enrollment canceled successfully');
     }
 }

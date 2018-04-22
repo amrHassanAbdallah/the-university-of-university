@@ -19,12 +19,16 @@ class ClassSeeder extends Seeder
         $coursesIDs = DB::table('courses')->pluck('id')->toArray();
         $studentsIDs = DB::table('users')->where('level', 'teacher')->pluck('id')->toArray();
         foreach (range(1, 10) as $index) {
+            $teacher_id = $studentsIDs[array_rand($studentsIDs, 1)];
+            $course_id = $coursesIDs[array_rand($coursesIDs, 1)];
+            $teacher = \App\User::find($teacher_id);
+            $course = \App\Course::find($course_id);
             DB::table('classes')->insert([
                 'user_id' => $studentsIDs[array_rand($studentsIDs, 1)],
                 'course_id' => $coursesIDs[array_rand($coursesIDs, 1)],
                 'date' => 'sunday at 9am',
                 'location' => 1 . 'th floor',
-                'name' => 'awesome class',
+                'name' => $course->name . ' by ' . $teacher->name,
             ]);
         }
 

@@ -73,6 +73,7 @@
                             <th>name</th>
                             <th>date</th>
                             <th>location</th>
+                            <th>state</th>
                             <th>actions</th>
 
                         </tr>
@@ -83,21 +84,19 @@
                                 <td>{{$class->name}}</td>
                                 <td>{{$class->date}}</td>
                                 <td>{{$class->location}}</td>
+                                <td>{{$class->getOriginal()['pivot_state']}}</td>
                                 <td>
-                                    @if(Auth::user()->level =="admin")
-                                        <a href="{{route('class.edit',$class->id)}}" class="btn btn-xs btn-info"
-                                           style="margin-right: 20px">Edit</a>
-                                        <form style="display: inline-block"
-                                              action="{{route('class.destroy',$class->id)}}"
-                                              method="post">
-                                            <input type="hidden" name="_method" value="delete">
-                                            {{csrf_field()}}
-                                            <button type="submit" class="btn btn-xs btn-danger">Delete</button>
-                                        </form>
-                                    @else
-                                        <a href="{{route('class.show',$class->id)}}" class="btn btn-xs btn-info"
-                                           style="margin-right: 20px">View</a>
-                                    @endif
+                                    <form style="display: inline-block"
+                                          action="{{route('class.cancelEnrollment',$class->id)}}"
+                                          method="post">
+                                        <input type="hidden" name="_method" value="PUT">
+                                        {{csrf_field()}}
+
+                                        <button type="submit" class="btn btn-xs btn-destroy"
+                                                style="margin-right: 20px">cancel enrollment
+                                        </button>
+                                    </form>
+
                                 </td>
                             </tr>
                         @endforeach

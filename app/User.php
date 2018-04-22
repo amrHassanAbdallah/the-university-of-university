@@ -53,6 +53,7 @@ class User extends Authenticatable
     public function Classes()
     {
         return $this->belongsToMany(StudentClass::class, 'user_class', 'user_id', 'class_id')
+            ->withPivot('active', 'state')
             ->withTimestamps();
     }
 
