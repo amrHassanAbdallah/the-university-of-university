@@ -64,6 +64,6 @@
 @include('inc.footer')
 <script>
     $(document).ready(function () {
-        $('#example').DataTable();
+        $('.table-pagination').DataTable();
     });
 </script>

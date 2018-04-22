@@ -17,7 +17,10 @@ class ClassController extends Controller
      */
     public function index()
     {
-        return view('admin.class.index')->with('classes', StudentClass::all());
+        return view('admin.class.index')->with([
+            'classes' => StudentClass::all(),
+            'myClasses' => Auth::user()->Classes
+        ]);
 
     }
 
