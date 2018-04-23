@@ -11,6 +11,12 @@ use Illuminate\Support\Facades\Auth;
 
 class ClassController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('admin')->except(['index', 'join', 'cancelEnrollment', 'show']);
+        $this->middleware('student')->only(['index', 'join', 'cancelEnrollment', 'show']);
+
+    }
     /**
      * Display a listing of the resource.
      *

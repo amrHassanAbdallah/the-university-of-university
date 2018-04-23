@@ -16,12 +16,14 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-Route::resource('user', 'UserController');
-Route::resource('course', 'CourseController');
-Route::resource('class', 'ClassController');
-Route::resource('registration', 'RegistrationController');
-
-Route::post('/class/{id}/join', 'ClassController@join')->name('class.join');
-Route::put('/class/{id}/exit', 'ClassController@cancelEnrollment')->name('class.cancelEnrollment');
+Route::middleware('auth')->group(function () {
+    Route::get('/home', 'HomeController@index')->name('home');
+    Route::middleware(['admin'])->group(function () {
+        Route::resource('user', 'UserController');
+        Route::resource('course', 'CourseController');
+        Route::resource('registration', 'RegistrationController');
+    });
+    Route::resource('class', 'ClassController');
+    Route::post('/class/{id}/join', 'ClassController@join')->name('class.join');
+    Route::put('/class/{id}/exit', 'ClassController@cancelEnrollment')->name('class.cancelEnrollment');
+});
