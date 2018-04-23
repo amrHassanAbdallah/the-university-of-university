@@ -34,3 +34,10 @@ $factory->define(App\Course::class, function (Faker $faker) {
     ];
 });
 
+$factory->define(App\Registration::class, function (Faker $faker) {
+    return [
+        'start' => $faker->date($format = 'Y-m-d', $max = 'now'),
+        'end' => $faker->dateTimeBetween('now', '+2 weeks')
+        ,
+    ];
+});
