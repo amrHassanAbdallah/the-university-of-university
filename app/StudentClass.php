@@ -118,4 +118,11 @@ class StudentClass extends Model
 
     }
 
+    public static function getAllTeacherClasses($teacher_id)
+    {
+        return self::where('user_id', $teacher_id)->get();
+    }
+
+
+
 }

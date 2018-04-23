@@ -14,7 +14,9 @@ class ClassController extends Controller
     public function __construct()
     {
         $this->middleware('admin')->except(['index', 'join', 'cancelEnrollment', 'show']);
-        $this->middleware('student')->only(['index', 'join', 'cancelEnrollment', 'show']);
+        $this->middleware('student')->only(['join', 'cancelEnrollment']);
+
+        //permission for show and index
 
     }
     /**
@@ -26,10 +28,19 @@ class ClassController extends Controller
     {
         /*dd(            Auth::user()->Classes()->where('active',1)->get()
 );*/
-        return view('admin.class.index')->with([
-            'classes' => StudentClass::all(),
-            'myClasses' => Auth::user()->Classes()->where('active', 1)->get()
-        ]);
+        if (Auth::user()->level === "admin" || Auth::user()->level === "admin") {
+            return view('admin.class.index')->with([
+                'classes' => StudentClass::all(),
+                'myClasses' => Auth::user()->Classes()->where('active', 1)->get()
+            ]);
+        } elseif (Auth::user()->level === "teacher") {
+            return view('admin.class.index')->with([
+                'classes' => StudentClass::getAllTeacherClasses(Auth::user()->id),
+                'myClasses' => []
+
+            ]);
+        }
+
 
     }
 
@@ -71,14 +82,24 @@ class ClassController extends Controller
      */
     public function show($id)
     {
+        $userLevel = Auth::user()->level;
         $class = StudentClass::find($id);
-        $course = Course::find($class->id);
-        return view('admin.class.single')->with([
-            'class' => StudentClass::find($id),
-            'course' => $course,
-            'teacher' => User::find($class->user_id),
-            'PreCourses' => $course->getPreqCourse()
-        ]);
+        if ($userLevel === "student") {
+            $course = Course::find($class->id);
+            return view('admin.class.single')->with([
+                'class' => StudentClass::find($id),
+                'course' => $course,
+                'teacher' => User::find($class->user_id),
+                'PreCourses' => $course->getPreqCourse()
+            ]);
+        } else {
+            $students = $class->User;
+            return view('teacher.students')->with([
+                'students' => $students,
+
+            ]);
+        }
+
     }
 
     /**
