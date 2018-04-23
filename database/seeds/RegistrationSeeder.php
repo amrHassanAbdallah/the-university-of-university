@@ -11,6 +11,6 @@ class RegistrationSeeder extends Seeder
      */
     public function run()
     {
-        factory(\App\Course::class, 1)->create();
+        factory(\App\Registration::class, 1)->create();
     }
 }

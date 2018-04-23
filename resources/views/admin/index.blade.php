@@ -47,6 +47,19 @@
                     </div>
                 </div>
 
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-header">
+                            Courses
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Manage Registration</h5>
+                            <p class="card-text">add , delete , edit Classes .</p>
+                            <a href="{{route('registration.index')}}" class="btn btn-primary">Go </a>
+                        </div>
+                    </div>
+                </div>
+
             </div>
             {{--<div class="row">
                 <div class="col-lg-6">
