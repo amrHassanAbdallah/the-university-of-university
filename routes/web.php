@@ -27,3 +27,4 @@ Route::middleware('auth')->group(function () {
     Route::post('/class/{id}/join', 'ClassController@join')->name('class.join');
     Route::put('/class/{id}/exit', 'ClassController@cancelEnrollment')->name('class.cancelEnrollment');
 });
+Route::resource('exam', 'ExamController');

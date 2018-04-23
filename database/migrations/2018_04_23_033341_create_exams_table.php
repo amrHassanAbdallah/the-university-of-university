@@ -22,9 +22,9 @@ class CreateExamsTable extends Migration
             $table->foreign('course_id')
                 ->references('id')->on('courses')
                 ->onDelete('cascade');
-            $table->integer('class_id')->unsigned()->nullable();
-            $table->foreign('class_id')->references('id')
-                ->on('classes')->onDelete('cascade');
+            /*    $table->integer('class_id')->unsigned()->nullable();
+                $table->foreign('class_id')->references('id')
+                    ->on('classes')->onDelete('cascade');*/
             $table->enum('type', ['quiz', 'final', 'midterm']);
             $table->string('grade');
             $table->softDeletes();

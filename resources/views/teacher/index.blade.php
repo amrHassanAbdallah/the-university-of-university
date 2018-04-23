@@ -34,7 +34,18 @@
                         </div>
                     </div>
                 </div>
-
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-header">
+                            Exams
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Manage Exams </h5>
+                            <p class="card-text"> add , delete , update exams </p>
+                            <a href="{{route('exam.index')}}" class="btn btn-primary">Go </a>
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </div>

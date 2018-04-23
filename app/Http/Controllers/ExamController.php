@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Course;
+use App\Exam;
+use App\StudentClass;
 use Illuminate\Http\Request;
 
 class ExamController extends Controller
@@ -13,7 +16,8 @@ class ExamController extends Controller
      */
     public function index()
     {
-        //
+        return view('teacher.exam.index')->with('exams', Exam::all());
+
     }
 
     /**
@@ -23,7 +27,8 @@ class ExamController extends Controller
      */
     public function create()
     {
-        //
+        return view('teacher.exam.create')->with(['courses' => Course::all(), 'classes' => StudentClass::all()]);
+
     }
 
     /**
@@ -34,7 +39,11 @@ class ExamController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $res = Exam::store(Exam::getDataFromRequest(Exam::getRequiredAttribute('post'), $request));
+        if ($res["state"]) {
+            return redirect()->back()->with('errors', $res['data']);
+        }
+        return redirect()->back()->with('success', 'a new Course have been added ');
     }
 
     /**
@@ -56,7 +65,11 @@ class ExamController extends Controller
      */
     public function edit($id)
     {
-        //
+
+        return view('teacher.exam.edit')->with([
+            'exam' => Exam::find($id),
+            'courses' => Course::all()
+        ]);
     }
 
     /**
@@ -68,7 +81,11 @@ class ExamController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $res = Exam::updateIt(Exam::getDataFromRequest(Exam::getRequiredAttribute('put'), $request), $id);
+        if ($res["state"]) {
+            return redirect()->back()->with('errors', $res['data']);
+        }
+        return redirect()->back()->with('success', 'Course updated !');
     }
 
     /**
@@ -79,6 +96,7 @@ class ExamController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Exam::find($id)->delete();
+        return redirect()->back()->with('success', 'Exam deleted !');
     }
 }
