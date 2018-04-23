@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Course;
+use App\Registration;
 use App\StudentClass;
 use App\User;
 use Illuminate\Http\Request;
@@ -122,24 +123,34 @@ class ClassController extends Controller
 
     public function join($id)
     {
-        $class = StudentClass::find($id);
-        $course = Course::find($class->course_id);
-        $coursePreIds = $course->getPrequestedCoursesIds();
-        $UserTokeIT = Auth::user()->Classes()->where('course_id', $course->id)->where('active', 1)->get();
-        $TotallActiveCourses = Auth::user()->Classes()->where('active', 1)->count();
+        $registration = Registration::orderBy('updated_at', 'desc')->first();
+        $now = date('Y-m-d');
+        if ($registration) {
 
-        if (count($UserTokeIT) === count($coursePreIds) && !count($UserTokeIT) && $TotallActiveCourses < 9) {
-            $class->user()->save(Auth::user());
+            if ($now > $registration->start && $now < $registration->end) {
+                $class = StudentClass::find($id);
+                $course = Course::find($class->course_id);
+                $coursePreIds = $course->getPrequestedCoursesIds();
+                $UserTokeIT = Auth::user()->Classes()->where('course_id', $course->id)->where('active', 1)->get();
+                $TotallActiveCourses = Auth::user()->Classes()->where('active', 1)->count();
 
-            return redirect()->back()->with('success', 'your enrollment will be held till you pay the fees .');
+                if (count($UserTokeIT) === count($coursePreIds) && !count($UserTokeIT) && $TotallActiveCourses < 9) {
+                    $class->user()->save(Auth::user());
+
+                    return redirect()->back()->with('success', 'your enrollment will be held till you pay the fees .');
+
+                }
+                if (count($UserTokeIT) !== count($coursePreIds)) {
+                    return redirect()->back()->with('error', 'you have not met the Prerequisite yet!');
+
+                }
+                return redirect()->back()->with('error', 'you already joined this class');
+        }
+
+            return redirect()->back()->with('error', ' you can not register after the registration deadline !! . ');
 
         }
-        if (count($UserTokeIT) !== count($coursePreIds)) {
-            return redirect()->back()->with('error', 'you have not met the Prerequisite yet!');
-
-        }
-        return redirect()->back()->with('error', 'you already joined this class');
-
+        return redirect()->back()->with('error', 'registration have not opened yet please wait ');
 
 
     }
