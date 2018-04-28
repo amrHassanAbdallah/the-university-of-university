@@ -41,5 +41,12 @@
             border-radius: 100px;
             border: 1px solid black;
         }
+
+        .nav-tabs li {
+            margin-right: 10px;
+            padding: 20px 40px;
+            border: 1px solid black;
+        }
+
     </style>
 </head>

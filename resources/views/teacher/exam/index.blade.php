@@ -5,7 +5,7 @@
             <div class="col-12">
                 <div class="content-section-heading text-center">
                     <h3 class="text-secondary mb-0">Manage</h3>
-                    <h2 class="mb-5">Courses</h2>
+                    <h2 class="mb-5">Exams</h2>
                 </div>
             </div>
 
