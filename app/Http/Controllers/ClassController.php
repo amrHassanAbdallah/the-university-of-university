@@ -28,7 +28,7 @@ class ClassController extends Controller
     {
         /*dd(            Auth::user()->Classes()->where('active',1)->get()
 );*/
-        if (Auth::user()->level === "admin" || Auth::user()->level === "admin") {
+        if (Auth::user()->level === "admin" || Auth::user()->level === "student") {
             return view('admin.class.index')->with([
                 'classes' => StudentClass::all(),
                 'myClasses' => Auth::user()->Classes()->where('active', 1)->get()

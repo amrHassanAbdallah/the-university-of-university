@@ -19,8 +19,8 @@ Auth::routes();
 Route::middleware('auth')->group(function () {
     Route::get('/home', 'HomeController@index')->name('home');
     Route::middleware(['admin'])->group(function () {
-        Route::resource('user', 'UserController');
         Route::resource('course', 'CourseController');
+        Route::resource('user', 'UserController');
         Route::resource('registration', 'RegistrationController');
     });
     Route::resource('class', 'ClassController');
