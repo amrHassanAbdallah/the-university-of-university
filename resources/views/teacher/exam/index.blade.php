@@ -39,12 +39,15 @@
                         <td>
                             <a href="{{route('exam.edit',$exam->id)}}" class="btn btn-xs btn-info"
                                style="margin-right: 20px">Edit</a>
+                            @if(date('Y-m-d') < $exam->test_day)
                             <form style="display: inline-block" action="{{route('exam.destroy',$exam->id)}}"
                                   method="post">
                                 <input type="hidden" name="_method" value="delete">
                                 {{csrf_field()}}
                                 <button type="submit" class="btn btn-xs btn-danger">Delete</button>
                             </form>
+
+                            @endif
                         </td>
                     </tr>
                 @endforeach
