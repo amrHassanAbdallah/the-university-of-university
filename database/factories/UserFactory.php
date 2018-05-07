@@ -14,9 +14,10 @@ use Faker\Generator as Faker;
 */
 
 $factory->define(App\User::class, function (Faker $faker) {
-    $level = $level ?? 'teacher';
+    $level = isset($level) ? $level : 'student';
+    $prefix = ($level == 'teacher') ? $faker->title . ' ' . $faker->name : $faker->name;
     return [
-        'name' => (($level === 'teacher') ? $faker->title . ' ' : '') . $faker->name,
+        'name' => $prefix,
         'email' => $faker->unique()->safeEmail,
         'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
         'remember_token' => str_random(10),
@@ -27,7 +28,6 @@ $factory->define(App\User::class, function (Faker $faker) {
 
 $factory->define(App\Course::class, function (Faker $faker) {
     return [
-        /*        'name' => $faker->title,*/
         'name' => $faker->text(20),
         'code' => str_random(5),
         'description' => $faker->text,

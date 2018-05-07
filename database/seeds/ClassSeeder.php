@@ -15,7 +15,7 @@ class ClassSeeder extends Seeder
     {
 
         $faker = new Faker();
-        factory('App\User', 10)->create(['level' => 'student']);
+        factory('App\User', 10)->create();
         $coursesIDs = DB::table('courses')->pluck('id')->toArray();
         $teachersIds = DB::table('users')->where('level', 'teacher')->pluck('id')->toArray();
         $teacher_id = \App\User::where('email', 'teacher@teacher.com')->first()->id;
@@ -41,13 +41,14 @@ class ClassSeeder extends Seeder
                 'location' => 1 . 'th floor',
                 'name' => $course->name . ' by ' . $teacher->name,
             ]);
-            $studentsIds = \App\User::where('level', 'student')->get();
-            /*            $class = \App\StudentClass::where('user_id',$teacher_id)->first();*/
-            foreach ($studentsIds as $studentsId) {
-                $class->User()->save($studentsId);
-            }
 
         }
+        $studentsIds = \App\User::where('level', 'student')->get();
+        /*            $class = \App\StudentClass::where('user_id',$teacher_id)->first();*/
+        foreach ($studentsIds as $studentsId) {
+            $class->User()->save($studentsId);
+        }
+
 
     }
 }
