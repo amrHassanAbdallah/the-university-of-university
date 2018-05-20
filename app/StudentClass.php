@@ -37,10 +37,14 @@ class StudentClass extends Model
             ->withTimestamps();
     }
 
-    public function Course()
+    /*public function Course()
     {
         return $this->belongsToMany(Course::class, 'user_course', 'class_id')
             ->withTimestamps();
+    }*/
+    public function Course()
+    {
+        return $this->hasOne(Course::class, 'id', 'course_id');
     }
 
 

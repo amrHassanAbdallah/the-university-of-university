@@ -79,7 +79,7 @@ class ClassController extends Controller
      *
      * @param  int $id
      * @return \Illuminate\Http\Response
-     */
+     */ 
     public function show($id)
     {
         $userLevel = Auth::user()->level;
@@ -96,6 +96,7 @@ class ClassController extends Controller
             $students = $class->User;
             return view('teacher.students')->with([
                 'students' => $students,
+                'exams' => $class->Course->Exam
 
             ]);
         }

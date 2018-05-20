@@ -43,6 +43,11 @@ class Course extends Model
             ->withTimestamps();
     }
 
+    public function Exam()
+    {
+        return $this->hasMany(Exam::class, 'course_id', 'id');
+    }
+
     /**
      * @param $preq
      * @param $course

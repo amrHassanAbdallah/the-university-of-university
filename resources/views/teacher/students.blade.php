@@ -40,30 +40,72 @@
         </div>
 
         <div class="row" style="margin-top: 20px">
-
             <div class="col-lg-12">
-                <ul class="nav nav-tabs">
-                    <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
-                    <li><a data-toggle="tab" href="#menu1">Menu 1</a></li>
-                    <li><a data-toggle="tab" href="#menu2">Menu 2</a></li>
-                </ul>
+                @foreach($exams as $exam)
+                    <ul class="nav nav-tabs">
+                        <li class=""><a data-toggle="tab"
+                                        href="#ex{{$exam->id}}">{{$exam->test_day.' '.$exam->type}}</a></li>
 
-                <div class="tab-content">
-                    <div id="home" class="tab-pane fade in active">
-                        <h3>HOME</h3>
-                        <p>Some content.</p>
-                    </div>
-                    <div id="menu1" class="tab-pane fade">
-                        <h3>Menu 1</h3>
-                        <p>Some content in menu 1.</p>
-                    </div>
-                    <div id="menu2" class="tab-pane fade">
-                        <h3>Menu 2</h3>
-                        <p>Some content in menu 2.</p>
-                    </div>
-                </div>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="ex{{$exam->id}}" class="tab-pane fade in ">
 
+                            <table id="example" class="table table-pagination table-striped table-bordered"
+                                   style="width:100%">
+                                <thead>
+                                <tr>
+                                    <th>name</th>
+                                    <th>grade</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($students as $student)
+                                    <tr>
+                                        <td>{{$student->name}}</td>
+                                        <?php $studentExam = $student->Exam()->where('id', $exam->id)->first(); ?>
+                                        @if($student->Exam()->where('id',$exam->id)->first())
+                                            <td>{{$studentExam->pivot->score}}</td>
+                                            <td>
+                                                <form style="display: inline-block"
+                                                      action=""
+                                                      method="post">
+                                                    <input type="hidden" name="_method" value="PUT">
+                                                    {{csrf_field()}}
 
+                                                    <button type="submit" class="btn btn-xs btn-destroy"
+                                                            style="margin-right: 20px">cancel enrollment
+                                                    </button>
+                                                </form>
+
+                                            </td>
+                                        @else
+                                            <td>
+                                                <form style="display: inline-block"
+                                                      action=""
+                                                      method="post">
+                                                    <input type="hidden" name="_method" value="post">
+                                                    {{csrf_field()}}
+                                                    <input type="number" name="score">
+                                                    <button type="submit" class="btn btn-xs btn-destroy"
+                                                            style="margin-right: 20px">cancel enrollment
+                                                    </button>
+                                                </form>
+
+                                            </td>
+
+                                        @endif
+                                        {{--                                    <td>{{$class->location}}</td>
+                                                                            <td>{{$class->getOriginal()['pivot_state']}}</td>--}}
+
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+
+                @endforeach
             </div>
         </div>
 
